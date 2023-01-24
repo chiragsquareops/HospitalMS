@@ -1,0 +1,18 @@
+version: 0.0
+os: linux
+
+files:
+  - source: /
+    destination: /var/www/hospitalMS
+    overwrite: true
+    timeout: 300
+
+hooks:
+  ApplicationStop:
+    - location: scripts/stop_script.sh
+      timeout: 300
+      runas: app
+  ApplicationStart:
+    - location: scripts/start_script.sh
+      timeout: 300
+      runas: app
