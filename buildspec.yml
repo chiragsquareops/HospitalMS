@@ -11,12 +11,6 @@ phases:
       - echo Installing...
   pre_build:
     commands:
-      - git clone https://github.com/chiragsquareops/HospitalMS
-      - sudo mv /home/app/HospitalMS /var/www/HospitalMS
-      - sudo chown -R www-data.www-data /var/www/HospitalMS/storage
-      - sudo chown -R www-data.www-data /var/www/HospitalMS/bootstrap/cache
-      - sudo chmod -R 775 storage
-      - sudo chmod -R 775 bootstrap/cache
       - mv .env.example .env
       - sed -i "s|APP_URL=http://127.0.0.1:8000/|APP_URL=http://35.167.215.144|" .env
       - sed -i "s|DB_HOST=127.0.0.1|DB_HOST=endpoint|" .env
