@@ -6,7 +6,7 @@ env:
 phases:
   install:
     runtime-versions: 
-      php: 7.4
+      php: latest
     commands:
       - echo Installing...
   pre_build:
@@ -17,6 +17,7 @@ phases:
       - sed -i "s|DB_PASSWORD=|DB_PASSWORD=$DB_PASSWORD|" .env
   build:
     commands:
+      - composer update
       - composer install
 artifacts:
   files:
