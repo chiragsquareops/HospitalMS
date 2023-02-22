@@ -17,7 +17,6 @@ phases:
       - sed -i "s|DB_PASSWORD=|DB_PASSWORD=admin123|" .env
   build:
     commands:
-      - composer update
       - composer install
 artifacts:
   files:
