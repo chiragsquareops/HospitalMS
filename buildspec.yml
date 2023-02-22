@@ -3,6 +3,7 @@ run-as: root
 env:
   secrets-manager:
     DB_PASSWORD: laravel-app:DB_PASSWORD
+    DB_HOST: laravel-app:DB_HOST
 phases:
   install:
     runtime-versions: 
@@ -12,13 +13,16 @@ phases:
   pre_build:
     commands:
       - mv .env.example .env
-      - sed -i "s|APP_URL=http://127.0.0.1:8000/|APP_URL=http://laravel.labs.squareops.in|" .env
-      - sed -i "s|DB_HOST=127.0.0.1|DB_HOST=prod-laravel-mysql.cluster-c5zbpa0be4xa.us-east-1.rds.amazonaws.com|" .env
-      - sed -i "s|DB_PASSWORD=|DB_PASSWORD=admin123|" .env
+      - sed -i "s|APP_URL=http://127.0.0.1:8000/|APP_URL=https://laravel.labs.squareops.in|" .env
+      - sed -i "s|DB_HOST=127.0.0.1|DB_HOST=$DB_HOST|" .env
+      - sed -i "s|DB_PASSWORD=|DB_PASSWORD=$DB_PASSWORD|" .env
   build:
     commands:
       - composer update
       - composer install
+      - php artisan key:generate
+      - php artisan storage:link
+      - php artisan migrate:fresh --seed
 artifacts:
   files:
     - "**/*"
