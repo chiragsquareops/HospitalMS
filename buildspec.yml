@@ -12,9 +12,9 @@ phases:
   pre_build:
     commands:
       - mv .env.example .env
-      - sed -i "s|APP_URL=http://127.0.0.1:8000/|APP_URL=http://35.167.215.144|" .env
-      - sed -i "s|DB_HOST=127.0.0.1|DB_HOST=endpoint|" .env
-      - sed -i "s|DB_PASSWORD=|DB_PASSWORD=$DB_PASSWORD|" .env
+      - sed -i "s|APP_URL=http://127.0.0.1:8000/|APP_URL=http://laravel.labs.squareops.in|" .env
+      - sed -i "s|DB_HOST=127.0.0.1|DB_HOST=prod-laravel-mysql.cluster-c5zbpa0be4xa.us-east-1.rds.amazonaws.com|" .env
+      - sed -i "s|DB_PASSWORD=|DB_PASSWORD=admin123|" .env
   build:
     commands:
       - composer update
