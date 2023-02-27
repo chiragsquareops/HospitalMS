@@ -4,6 +4,9 @@ env:
   secrets-manager:
     DB_PASSWORD: laravel-app:DB_PASSWORD
     DB_HOST: laravel-app:DB_HOST
+    DB_USERNAME: laravel-app:DB_USERNAME
+    AWS_ACCESS_KEY_ID: laravel-app:AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY: laravel-app:AWS_SECRET_ACCESS_KEY
 phases:
   install:
     runtime-versions: 
@@ -16,6 +19,16 @@ phases:
       - sed -i "s|APP_URL=http://127.0.0.1:8000/|APP_URL=https://laravel.labs.squareops.in|" .env
       - sed -i "s|DB_HOST=127.0.0.1|DB_HOST=$DB_HOST|" .env
       - sed -i "s|DB_PASSWORD=|DB_PASSWORD=$DB_PASSWORD|" .env
+      - sed -i "s|DB_USERNAME=|DB_USERNAME=$DB_USERNAME|" .env
+      - sed -i "s|QUEUE_CONNECTION=sync|QUEUE_CONNECTION=sqs|" .env
+      - sed -i "s|MAIL_HOST=mailhog|MAIL_HOST=smtp.gmail.com|" .env
+      - sed -i "s|MAIL_PORT=1025|MAIL_PORT=587|" .env
+      - sed -i "s|MAIL_USERNAME=null|MAIL_USERNAME=randumdump@gmail.com|" .env
+      - sed -i "s|MAIL_PASSWORD=null|MAIL_PASSWORD="xihpbkarxnlfmdgn"|" .env
+      - sed -i "s|MAIL_ENCRYPTION=null|MAIL_ENCRYPTION=tls|" .env
+      - sed -i "s|MAIL_FROM_ADDRESS=null|MAIL_FROM_ADDRESS=randumdump@gmail.com|" .env
+      - sed -i "s|AWS_ACCESS_KEY_ID=|AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID|" .env
+      - sed -i "s|AWS_SECRET_ACCESS_KEY=|AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY|" .env
   build:
     commands:
       - composer update
@@ -26,6 +39,7 @@ phases:
       - sudo chmod -R 775 bootstrap/cache
       - php artisan key:generate
       - php artisan storage:link
+      - php artisan migrate:fresh --seed
 artifacts:
   files:
     - "**/*"
