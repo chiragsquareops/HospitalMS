@@ -33,10 +33,10 @@ phases:
     commands:
       - composer update
       - composer install
-      - sudo chown -R www-data.www-data /var/www/hospitalMS/storage
-      - sudo chown -R www-data.www-data /var/www/hospitalMS/bootstrap/cache
-      - sudo chmod -R 775 storage
-      - sudo chmod -R 775 bootstrap/cache
+#       - sudo chown -R www-data.www-data /var/www/hospitalMS/storage
+#       - sudo chown -R www-data.www-data /var/www/hospitalMS/bootstrap/cache
+#       - sudo chmod -R 775 storage
+#       - sudo chmod -R 775 bootstrap/cache
       - php artisan key:generate
       - php artisan storage:link
       - php artisan migrate:fresh --seed
